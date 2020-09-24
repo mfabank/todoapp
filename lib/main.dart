@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/models/gorevler.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -13,10 +14,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List gorevListesi = [];
-  List sureListesi = [];
   String yazi;
   String sure;
+  List <Gorevler> gorevler = [Gorevler("", "")];
+  List gorevListem = [];
+  List sureListem = [];
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +30,13 @@ class _MyAppState extends State<MyApp> {
         backgroundColor: Colors.deepPurpleAccent,
         title: Text("Yapılacaklar Listesi"),
         centerTitle: true,
+        elevation: 15,
+        shadowColor: Colors.deepPurpleAccent,
       ),
       body: Column(
         children: [
           Container(
+            margin: EdgeInsets.only(top:20),
             child: Row(
               children: [
                 Flexible(
@@ -37,11 +45,16 @@ class _MyAppState extends State<MyApp> {
                       Container(
                         width: 1000,
                         child: TextFormField(
+                          decoration: InputDecoration(
+                            isDense: true,
+                            icon: Icon(Icons.remove,color: Colors.deepPurpleAccent,),
+                            hintText: "Görev başlığı",
+                          ),
                           style: TextStyle(
                             color: Colors.deepPurpleAccent,
                           ),
                           onChanged: (String value) {
-                            yazi=value;
+                            yazi = value;
                           },
                           maxLength: 50,
                           cursorColor: Colors.deepPurpleAccent,
@@ -50,6 +63,11 @@ class _MyAppState extends State<MyApp> {
                       Container(
                         width: 1000,
                         child: TextFormField(
+                          decoration: InputDecoration(
+                            isDense: true,
+                            icon: Icon(Icons.remove,color: Colors.deepPurpleAccent,),
+                            hintText: "Görev detayı",
+                          ),
                           style: TextStyle(
                             color: Colors.deepPurpleAccent,
                           ),
@@ -60,20 +78,20 @@ class _MyAppState extends State<MyApp> {
                           cursorColor: Colors.deepPurpleAccent,
                         ),
                       ),
+                      SizedBox(height: 10),
                     ],
+
                   ),
                 ),
 
                 Container(
                   padding: EdgeInsets.only(top:25),
                   child: FlatButton(
-                    child: Icon(Icons.arrow_forward,size: 50,),
+                    child: Icon(Icons.post_add,size: 50,color: Colors.deepPurpleAccent,),
                     onPressed: () {
                       setState(() {
-                        gorevListesi.add(yazi);
-                        sureListesi.add(sure);
-                        print(gorevListesi);
-                        print(sureListesi);
+                        gorevListem.add(yazi);
+                        sureListem.add(sure);
                       });
                     }
                   ),
@@ -83,12 +101,14 @@ class _MyAppState extends State<MyApp> {
           ),
           Flexible(
             child: ListView.builder(
-              itemCount: gorevListesi.length,
+              itemCount: gorevListem.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(gorevListesi[index]),
-                  subtitle: Text(sureListesi[index].toString()),
-                );
+                  leading: Icon(Icons.calendar_today),
+                    title: Text(gorevListem[index]),
+                    subtitle: Text(sureListem[index]),
+                  dense: true,
+                  );
               },
             ),
           )
