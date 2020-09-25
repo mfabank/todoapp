@@ -41,6 +41,11 @@ class _MyAppState extends State<MyApp> {
                         width: 1000,
                         child: TextFormField(
                           decoration: InputDecoration(
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.deepPurpleAccent,
+                              ),
+                            ),
                             labelText: "Başlık",
                             labelStyle:
                                 TextStyle(color: Colors.deepPurpleAccent),
@@ -65,6 +70,11 @@ class _MyAppState extends State<MyApp> {
                         width: 1000,
                         child: TextFormField(
                           decoration: InputDecoration(
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.deepPurpleAccent,
+                              ),
+                            ),
                             labelText: "Detay",
                             labelStyle:
                                 TextStyle(color: Colors.deepPurpleAccent),
@@ -124,13 +134,12 @@ class _MyAppState extends State<MyApp> {
                     color: Colors.red,
                     child: Icon(Icons.delete),
                   ),
-                  onDismissed: (direction){
-                    if(direction == DismissDirection.endToStart){
+                  onDismissed: (direction) {
+                    if (direction == DismissDirection.endToStart) {
                       gorevListem.removeAt(index);
-                      Scaffold.of(context).showSnackBar(SnackBar(content: Text("$silinecekMetin silindi")));
-                    }else if(direction == DismissDirection.startToEnd) {
-
-                    }
+                      Scaffold.of(context).showSnackBar(
+                          SnackBar(content: Text("$silinecekMetin silindi")));
+                    } else if (direction == DismissDirection.startToEnd) {}
                   },
                   child: ListTile(
                     leading: Icon(Icons.calendar_today),
