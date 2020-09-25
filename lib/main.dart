@@ -17,6 +17,7 @@ class _MyAppState extends State<MyApp> {
   String sure;
   List gorevListem = [];
   List sureListem = [];
+  final GlobalKey<FormState> _formkey = new GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,68 +36,83 @@ class _MyAppState extends State<MyApp> {
             child: Row(
               children: [
                 Flexible(
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 1000,
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
+                  child: Form(
+                    key: _formkey,
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 4000,
+                          child: TextFormField(
+                            validator: (input) {
+                              if (input.isEmpty) {
+                                return "Lütfen bu alanı boş bırakmayınız";
+                              }
+                            },
+                            onSaved: (input) => yazi = input,
+                            decoration: InputDecoration(
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.deepPurpleAccent,
+                                ),
+                              ),
+                              labelText: "Başlık",
+                              labelStyle:
+                                  TextStyle(color: Colors.deepPurpleAccent),
+                              isDense: true,
+                              icon: Icon(
+                                Icons.arrow_forward,
                                 color: Colors.deepPurpleAccent,
                               ),
+                              hintText: "Görev başlığı",
                             ),
-                            labelText: "Başlık",
-                            labelStyle:
-                                TextStyle(color: Colors.deepPurpleAccent),
-                            isDense: true,
-                            icon: Icon(
-                              Icons.arrow_forward,
+                            style: TextStyle(
                               color: Colors.deepPurpleAccent,
                             ),
-                            hintText: "Görev başlığı",
+                            onChanged: (String value) {
+                              yazi = value;
+                            },
+                            maxLength: 50,
+                            cursorColor: Colors.deepPurpleAccent,
                           ),
-                          style: TextStyle(
-                            color: Colors.deepPurpleAccent,
-                          ),
-                          onChanged: (String value) {
-                            yazi = value;
-                          },
-                          maxLength: 50,
-                          cursorColor: Colors.deepPurpleAccent,
                         ),
-                      ),
-                      Container(
-                        width: 1000,
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(
+                        Container(
+                          width: 4000,
+                          child: TextFormField(
+                            validator: (input) {
+                              if (input.isEmpty) {
+                                return "Lütfen bu alanı boş bırakmayınız";
+                              }
+                            },
+                            onSaved: (input) => sure = input,
+                            decoration: InputDecoration(
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.deepPurpleAccent,
+                                ),
+                              ),
+                              labelText: "Detay",
+                              labelStyle:
+                                  TextStyle(color: Colors.deepPurpleAccent),
+                              isDense: true,
+                              icon: Icon(
+                                Icons.arrow_forward,
                                 color: Colors.deepPurpleAccent,
                               ),
+                              hintText: "Görev detayı",
                             ),
-                            labelText: "Detay",
-                            labelStyle:
-                                TextStyle(color: Colors.deepPurpleAccent),
-                            isDense: true,
-                            icon: Icon(
-                              Icons.arrow_forward,
+                            style: TextStyle(
                               color: Colors.deepPurpleAccent,
                             ),
-                            hintText: "Görev detayı",
+                            onChanged: (String value) {
+                              sure = value;
+                            },
+                            maxLength: 50,
+                            cursorColor: Colors.deepPurpleAccent,
                           ),
-                          style: TextStyle(
-                            color: Colors.deepPurpleAccent,
-                          ),
-                          onChanged: (String value) {
-                            sure = value;
-                          },
-                          maxLength: 50,
-                          cursorColor: Colors.deepPurpleAccent,
                         ),
-                      ),
-                      SizedBox(height: 10),
-                    ],
+                        SizedBox(height: 10),
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -109,8 +125,7 @@ class _MyAppState extends State<MyApp> {
                       ),
                       onPressed: () {
                         setState(() {
-                          gorevListem.add(yazi);
-                          sureListem.add(sure);
+                          girisYap();
                         });
                       }),
                 ),
@@ -154,5 +169,15 @@ class _MyAppState extends State<MyApp> {
         ],
       ),
     );
+  }
+
+  girisYap() {
+    final form = _formkey.currentState;
+
+    if (form.validate()) {
+      gorevListem.add(yazi);
+      sureListem.add(sure);
+      form.save();
+    }
   }
 }
